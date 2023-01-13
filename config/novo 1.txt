@@ -1,0 +1,17 @@
+sudo chown 10001 volumes
+
+docker run --name sqlserver --hostname sqlserver -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=1433:1433' -p 1433:1433 -v ~/volumes/sqlserver/data:/var/opt/mssql/data -v ~/volumes/sqlserver/log:/var/opt/mssql/log -v ~/volumes/sqlserver/secrets:/var/opt/mssql/secrets mcr.microsoft.com/mssql/server:2019-latest
+
+docker run --name sqlserver --hostname sqlserver -v ~/volumes/sqlserver:/var/opt/mssql -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=1q2w3e4r@#$" -p 1433:1433 mcr.microsoft.com/mssql/server:2022-latest
+
+127.0.0.1,1433
+SA 
+1q2w3e4r@#$
+
+172.17.0.2,1433
+
+
+
+
+
+

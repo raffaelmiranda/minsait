@@ -1,0 +1,22 @@
+version: '3.1'
+services:
+  sqlserver:
+    restart: always
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    hostname: srv-sqlserver01
+    networks:
+      - network-desafio
+    user: root
+    ports:
+      - 1433:1433
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: SqlServer2019!
+    volumes:
+      - ~/volumes/sqlserver/data:/var/opt/mssql/data
+      - ~/volumes/sqlserver/log:/var/opt/mssql/log
+      - ~/volumes/sqlserver/secrets:/var/opt/mssql/secrets
+networks: 
+  network-desafio:
+    driver: bridge
