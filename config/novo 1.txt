@@ -1,14 +1,24 @@
 sudo chown 10001 volumes
 
-docker run --name sqlserver --hostname sqlserver -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=1433:1433' -p 1433:1433 -v ~/volumes/sqlserver/data:/var/opt/mssql/data -v ~/volumes/sqlserver/log:/var/opt/mssql/log -v ~/volumes/sqlserver/secrets:/var/opt/mssql/secrets mcr.microsoft.com/mssql/server:2019-latest
-
-docker run --name sqlserver --hostname sqlserver -v ~/volumes/sqlserver:/var/opt/mssql -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=1q2w3e4r@#$" -p 1433:1433 mcr.microsoft.com/mssql/server:2022-latest
-
+smss conectar no docker 
 127.0.0.1,1433
-SA 
-1q2w3e4r@#$
+127.0.0.1\sqlserver,1433
 
-172.17.0.2,1433
+dotnet ef migrations add v1 -p SalesManagement.CashFlow.Infrastructure\SalesManagement.CashFlow.Infrastructure.csproj -s SalesManagement.CashFlow.Api\SalesManagement.CashFlow.Api.csproj -c CashFlowContext
+
+dotnet ef database update -p SalesManagement.CashFlow.Infrastructure\SalesManagement.CashFlow.Infrastructure.csproj -s SalesManagement.CashFlow.Api\SalesManagement.CashFlow.Api.csproj -c CashFlowContext
+
+dotnet ef migrations remove -p SalesManagement.CashFlow.Infrastructure\SalesManagement.CashFlow.Infrastructure.csproj -s SalesManagement.CashFlow.Api\SalesManagement.CashFlow.Api.csproj -c CashFlowContext
+
+docker inspect -f \
+'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' \
+sqlserver
+
+docker network inspect -f \
+'{{range .IPAM.Config}}{{.Subnet}}{{end}}' controle-fluxo-caixa_network-desafio
+
+docker network inspect -f '{{json .Containers}}' controle-fluxo-caixa_network-desafio | jq '.[] | .Name + ":" + .IPv4Address'
+
 
 
 

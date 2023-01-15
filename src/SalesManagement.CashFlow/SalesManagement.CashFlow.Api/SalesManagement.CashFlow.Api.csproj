@@ -6,10 +6,25 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>45343e5c-a6fc-4bc5-9253-06494e46a934</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <CodeAnalysisRuleSet>..\.sonarlint\pagamento-payment-core-adapter-worker-netcorecsharp.ruleset</CodeAnalysisRuleSet>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SalesManagement.CashFlow.Application\SalesManagement.CashFlow.Application.csproj" />
+    <ProjectReference Include="..\SalesManagement.CashFlow.Infrastructure\SalesManagement.CashFlow.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
