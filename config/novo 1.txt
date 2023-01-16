@@ -1,6 +1,6 @@
 sudo chown 10001 volumes
 
-docker-compose -f docker-compose.yml up -d
+docker-compose -f docker-compose.yml up --build -d
 
 smss conectar no docker 
 127.0.0.1,1433

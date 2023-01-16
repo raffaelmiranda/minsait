@@ -2,13 +2,20 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+#EXPOSE 80
+#EXPOSE 443
+EXPOSE 7103
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["SalesManagement.Report.Api/SalesManagement.Report.Api.csproj", "SalesManagement.Report.Api/"]
+
+COPY ["src/SalesManagement.Report/SalesManagement.Report.Api/SalesManagement.Report.Api.csproj", "SalesManagement.Report.Api/"]
+COPY ["src/SalesManagement.Report/SalesManagement.Report.Application/SalesManagement.Report.Application.csproj", "SalesManagement.Report.Application/"]
+COPY ["src/SalesManagement.Report/SalesManagement.Report.Domain/SalesManagement.Report.Domain.csproj", "SalesManagement.Report.Domain/"]
+COPY ["src/SalesManagement.Report/SalesManagement.Report.Infrastructure/SalesManagement.Report.Infrastructure.csproj", "SalesManagement.Report.Infrastructure/"]
+
 RUN dotnet restore "SalesManagement.Report.Api/SalesManagement.Report.Api.csproj"
+
 COPY . .
 WORKDIR "/src/SalesManagement.Report.Api"
 RUN dotnet build "SalesManagement.Report.Api.csproj" -c Release -o /app/build

@@ -17,6 +17,36 @@ services:
       - ~/volumes/sqlserver/data:/var/opt/mssql/data
       - ~/volumes/sqlserver/log:/var/opt/mssql/log
       - ~/volumes/sqlserver/secrets:/var/opt/mssql/secrets
+  cashflow:
+    build:
+        context: .
+        dockerfile: src/SalesManagement.CashFlow/SalesManagement.CashFlow.Api/Dockerfile
+    container_name: backend-api-cashflow
+    hostname: api.cashflow
+    restart: always
+    ports:
+        - 4002:7102
+    networks:
+      - network-desafio
+    environment: 
+      ASPNETCORE_ENVIRONMENT: Development
+    depends_on:
+      - sqlserver
+  report:
+    build:
+        context: .
+        dockerfile: src/SalesManagement.Report/SalesManagement.Report.Api/Dockerfile
+    container_name: backend-api-report
+    hostname: api.report
+    restart: always
+    ports:
+        - 4003:7103
+    networks:
+      - network-desafio
+    environment: 
+      ASPNETCORE_ENVIRONMENT: Development
+    depends_on:
+      - sqlserver
 networks: 
   network-desafio:
     driver: bridge
