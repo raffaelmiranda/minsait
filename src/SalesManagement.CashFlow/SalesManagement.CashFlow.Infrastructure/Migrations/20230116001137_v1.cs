@@ -17,14 +17,29 @@ namespace SalesManagement.CashFlow.Infrastructure.Migrations
                 name: "CashFlow");
 
             migrationBuilder.CreateTable(
+                name: "Relatorio",
+                schema: "CashFlow",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NomeArquivo = table.Column<string>(type: "varchar(500)", unicode: false, maxLength: 500, nullable: false),
+                    Caminho = table.Column<string>(type: "varchar(500)", unicode: false, maxLength: 500, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Relatorio", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TipoLancamento",
                 schema: "CashFlow",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CriadoEm = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "GetDate()"),
+                    Nome = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,8 +77,8 @@ namespace SalesManagement.CashFlow.Infrastructure.Migrations
                 columns: new[] { "Id", "CriadoEm", "Nome" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 1, 14, 17, 20, 21, 478, DateTimeKind.Local).AddTicks(9638), "Debit" },
-                    { 2, new DateTime(2023, 1, 14, 17, 20, 21, 478, DateTimeKind.Local).AddTicks(9688), "Credit" }
+                    { 1, new DateTime(2023, 1, 15, 21, 11, 37, 403, DateTimeKind.Local).AddTicks(137), "Debit" },
+                    { 2, new DateTime(2023, 1, 15, 21, 11, 37, 403, DateTimeKind.Local).AddTicks(179), "Credit" }
                 });
 
             migrationBuilder.InsertData(
@@ -72,10 +87,14 @@ namespace SalesManagement.CashFlow.Infrastructure.Migrations
                 columns: new[] { "Id", "Categoria", "CriadoEm", "Descricao", "TipoLancamentoId", "Valor" },
                 values: new object[,]
                 {
-                    { 1, "Agua", new DateTime(2023, 1, 14, 17, 20, 21, 478, DateTimeKind.Local).AddTicks(9699), "Conta da Sabesp", 1, 100.0m },
-                    { 2, "Folha de Pagamento", new DateTime(2023, 1, 14, 17, 20, 21, 478, DateTimeKind.Local).AddTicks(9710), "Despesa com funcionários", 1, 100000.0m },
-                    { 3, "Recebivéis", new DateTime(2023, 1, 14, 17, 20, 21, 478, DateTimeKind.Local).AddTicks(9717), "Venda para client X", 2, 200000.0m },
-                    { 4, "Recebivéis", new DateTime(2023, 1, 14, 17, 20, 21, 478, DateTimeKind.Local).AddTicks(9723), "Venda para client Y", 2, 100000.0m }
+                    { 1, "categoria 01", new DateTime(2023, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "descrição 01", 1, 100.0m },
+                    { 2, "categoria 02", new DateTime(2023, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "descrição 02", 1, 100000.0m },
+                    { 3, "categoria 03", new DateTime(2023, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), "descrição 03", 2, 200000.0m },
+                    { 4, "categoria 04", new DateTime(2023, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), "descrição 04", 2, 100000.0m },
+                    { 5, "categoria 05", new DateTime(2023, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "descrição 05", 1, 100.0m },
+                    { 6, "categoria 06", new DateTime(2023, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "descrição 06", 1, 100000.0m },
+                    { 7, "categoria 07", new DateTime(2023, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "descrição 07", 2, 200000.0m },
+                    { 8, "categoria 08", new DateTime(2023, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "descrição 08", 2, 100000.0m }
                 });
 
             migrationBuilder.CreateIndex(
@@ -90,6 +109,10 @@ namespace SalesManagement.CashFlow.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "LancamentoBancario",
+                schema: "CashFlow");
+
+            migrationBuilder.DropTable(
+                name: "Relatorio",
                 schema: "CashFlow");
 
             migrationBuilder.DropTable(

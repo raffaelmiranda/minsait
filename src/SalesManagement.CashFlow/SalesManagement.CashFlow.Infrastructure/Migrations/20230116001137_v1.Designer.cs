@@ -12,7 +12,7 @@ using SalesManagement.CashFlow.Infrastructure.Persistence.Contexts;
 namespace SalesManagement.CashFlow.Infrastructure.Migrations
 {
     [DbContext(typeof(CashFlowContext))]
-    [Migration("20230114202021_v1")]
+    [Migration("20230116001137_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -73,39 +73,102 @@ namespace SalesManagement.CashFlow.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Categoria = "Agua",
-                            CriadoEm = new DateTime(2023, 1, 14, 17, 20, 21, 478, DateTimeKind.Local).AddTicks(9699),
-                            Descricao = "Conta da Sabesp",
+                            Categoria = "categoria 01",
+                            CriadoEm = new DateTime(2023, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "descrição 01",
                             TipoLancamentoId = 1,
                             Valor = 100.0m
                         },
                         new
                         {
                             Id = 2,
-                            Categoria = "Folha de Pagamento",
-                            CriadoEm = new DateTime(2023, 1, 14, 17, 20, 21, 478, DateTimeKind.Local).AddTicks(9710),
-                            Descricao = "Despesa com funcionários",
+                            Categoria = "categoria 02",
+                            CriadoEm = new DateTime(2023, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "descrição 02",
                             TipoLancamentoId = 1,
                             Valor = 100000.0m
                         },
                         new
                         {
                             Id = 3,
-                            Categoria = "Recebivéis",
-                            CriadoEm = new DateTime(2023, 1, 14, 17, 20, 21, 478, DateTimeKind.Local).AddTicks(9717),
-                            Descricao = "Venda para client X",
+                            Categoria = "categoria 03",
+                            CriadoEm = new DateTime(2023, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "descrição 03",
                             TipoLancamentoId = 2,
                             Valor = 200000.0m
                         },
                         new
                         {
                             Id = 4,
-                            Categoria = "Recebivéis",
-                            CriadoEm = new DateTime(2023, 1, 14, 17, 20, 21, 478, DateTimeKind.Local).AddTicks(9723),
-                            Descricao = "Venda para client Y",
+                            Categoria = "categoria 04",
+                            CriadoEm = new DateTime(2023, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "descrição 04",
+                            TipoLancamentoId = 2,
+                            Valor = 100000.0m
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Categoria = "categoria 05",
+                            CriadoEm = new DateTime(2023, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "descrição 05",
+                            TipoLancamentoId = 1,
+                            Valor = 100.0m
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Categoria = "categoria 06",
+                            CriadoEm = new DateTime(2023, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "descrição 06",
+                            TipoLancamentoId = 1,
+                            Valor = 100000.0m
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Categoria = "categoria 07",
+                            CriadoEm = new DateTime(2023, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "descrição 07",
+                            TipoLancamentoId = 2,
+                            Valor = 200000.0m
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Categoria = "categoria 08",
+                            CriadoEm = new DateTime(2023, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "descrição 08",
                             TipoLancamentoId = 2,
                             Valor = 100000.0m
                         });
+                });
+
+            modelBuilder.Entity("SalesManagement.CashFlow.Domain.Entities.Relatorio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Caminho")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("Caminho");
+
+                    b.Property<string>("NomeArquivo")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("NomeArquivo");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Relatorio", "CashFlow");
                 });
 
             modelBuilder.Entity("SalesManagement.CashFlow.Domain.Entities.TipoLancamento", b =>
@@ -117,11 +180,17 @@ namespace SalesManagement.CashFlow.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasColumnName("CriadoEm")
+                        .HasDefaultValueSql("GetDate()");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("Nome");
 
                     b.HasKey("Id");
 
@@ -131,13 +200,13 @@ namespace SalesManagement.CashFlow.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CriadoEm = new DateTime(2023, 1, 14, 17, 20, 21, 478, DateTimeKind.Local).AddTicks(9638),
+                            CriadoEm = new DateTime(2023, 1, 15, 21, 11, 37, 403, DateTimeKind.Local).AddTicks(137),
                             Nome = "Debit"
                         },
                         new
                         {
                             Id = 2,
-                            CriadoEm = new DateTime(2023, 1, 14, 17, 20, 21, 478, DateTimeKind.Local).AddTicks(9688),
+                            CriadoEm = new DateTime(2023, 1, 15, 21, 11, 37, 403, DateTimeKind.Local).AddTicks(179),
                             Nome = "Credit"
                         });
                 });

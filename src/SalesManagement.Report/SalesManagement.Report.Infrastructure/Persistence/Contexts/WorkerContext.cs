@@ -1,13 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SalesManagement.CashFlow.Domain.Entities;
-using SalesManagement.CashFlow.Infrastructure.Extensions;
-using SalesManagement.CashFlow.Infrastructure.Persistence.Configurations;
+using SalesManagement.Report.Domain.Entities;
+using SalesManagement.Report.Infrastructure.Persistence.Configurations;
 
-namespace SalesManagement.CashFlow.Infrastructure.Persistence.Contexts
+namespace SalesManagement.Report.Infrastructure.Persistence.Contexts
 {
-    public class CashFlowContext : DbContext
+    public class WorkerContext : DbContext
     {
-        public CashFlowContext(DbContextOptions<CashFlowContext> dbContextOptions) : base(dbContextOptions)
+        public WorkerContext(DbContextOptions<WorkerContext> dbContextOptions) : base(dbContextOptions)
         {
             if (dbContextOptions is null)
             { throw new ArgumentNullException(nameof(dbContextOptions)); }
@@ -15,7 +14,6 @@ namespace SalesManagement.CashFlow.Infrastructure.Persistence.Contexts
 
         public DbSet<LancamentoBancario> LancamentoBancario { get; set; }
         public DbSet<Relatorio> Relatorios { get; set; }
-        public DbSet<TipoLancamento> TipoLancamentos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,8 +21,7 @@ namespace SalesManagement.CashFlow.Infrastructure.Persistence.Contexts
             modelBuilder.HasDefaultSchema("CashFlow");
             modelBuilder.ApplyConfiguration(new LancamentoBancarioConfiguration());
             modelBuilder.ApplyConfiguration(new RelatorioConfiguration());
-            modelBuilder.ApplyConfiguration(new TipoLancamentoConfiguration());
-            modelBuilder.Seed();
+            
         }
     }
 }

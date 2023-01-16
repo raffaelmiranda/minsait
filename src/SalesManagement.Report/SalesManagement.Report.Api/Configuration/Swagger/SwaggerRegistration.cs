@@ -5,7 +5,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
-namespace SalesManagement.CashFlow.Api.Configuration.Swagger
+namespace SalesManagement.Report.Api.Configuration.Swagger
 {
     public static class SwaggerRegistration
     {
@@ -104,7 +104,7 @@ namespace SalesManagement.CashFlow.Api.Configuration.Swagger
         {
             var info = new OpenApiInfo()
             {
-                Title = "SalesManagement.CashFlow - API",
+                Title = "SalesManagement.Report - API",
                 Version = description.ApiVersion.ToString(),
                 Contact = new OpenApiContact
                 {
