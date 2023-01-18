@@ -33,6 +33,11 @@ if (!app.Environment.IsProduction())
     //app.UseSwaggerAuthorized();
     app.UseSwaggerDocumentation();
 }
+else
+{
+    app.UseHsts();
+    app.UseHttpsRedirection();
+}
 
 await app.Services.MigrateDatabaseAsync<CashFlowContext>();
 await app.RunAsync();
