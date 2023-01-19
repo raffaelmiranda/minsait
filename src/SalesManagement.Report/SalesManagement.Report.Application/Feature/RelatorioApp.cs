@@ -5,24 +5,22 @@ using SalesManagement.Report.Domain.Entities;
 using SalesManagement.Report.Domain.Interfaces.Repositories;
 using System.Globalization;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace SalesManagement.Report.Application.Feature
 {
-    public class Relatorio: IRelatorio
+    public class RelatorioApp: IRelatorio
     {
         private readonly ILancamentoBancarioRepository _repoLancamento;
         private readonly IRelatorioRepository _repoRelatorio;
 
-        private readonly string path;
 
-        public Relatorio(ILancamentoBancarioRepository repoLancamento, IRelatorioRepository repoRelatorio)
+        public RelatorioApp(ILancamentoBancarioRepository repoLancamento, IRelatorioRepository repoRelatorio)
         {
             _repoLancamento = repoLancamento;
             _repoRelatorio = repoRelatorio;
 
-            path = $"{Directory.GetCurrentDirectory()}\\";
-     
         }
 
         public void Processar()
@@ -30,18 +28,21 @@ namespace SalesManagement.Report.Application.Feature
             List<LancamentoBancario> lancamentos = _repoLancamento.ObterTodosComTipoLancamento();
 
             var config = new CsvConfiguration(CultureInfo.CurrentCulture) { Delimiter = ";", Encoding = Encoding.UTF8 };
-
-            if (!Directory.Exists($"{path}relatorio")) Directory.CreateDirectory($"{path} relatorio");
-
+            string fullPathFile = string.Empty;
             string nomeArquivo = $"{DateTime.Now:yyyyMMdd}-relatorio-consolidado.csv";
 
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) fullPathFile = $"{Directory.GetCurrentDirectory()}\\{nomeArquivo}";
+            else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) fullPathFile = $"{Directory.GetCurrentDirectory()}/{nomeArquivo}";
+            
+                
+
             using (var mem = new MemoryStream())
-            using (var writer = new StreamWriter($"{path}relatorio\\{nomeArquivo}"))
+            using (var writer = new StreamWriter(fullPathFile))
             using (var csvWriter = new CsvWriter(writer, config))
             {
-                Domain.Entities.Relatorio relatorio = new Domain.Entities.Relatorio();
+                Relatorio relatorio = new Relatorio();
                 relatorio.NomeArquivo = nomeArquivo;
-                relatorio.Caminho = $"{path}relatorio\\{nomeArquivo}";
+                relatorio.Caminho = fullPathFile;
 
                 int index = 0;
 
@@ -76,7 +77,17 @@ namespace SalesManagement.Report.Application.Feature
 
         public byte[] Download(string nomeArquivo)
         {
-            return File.ReadAllBytes(($"{path}relatorio\\{nomeArquivo}.csv"));
+            string fullPathFile = string.Empty;
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) fullPathFile = $"{Directory.GetCurrentDirectory()}\\{nomeArquivo}";
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) fullPathFile = $"{Directory.GetCurrentDirectory()}/{nomeArquivo}";
+
+            return File.ReadAllBytes(fullPathFile);
+        }
+
+        public List<Relatorio> Obter()
+        {
+            return _repoRelatorio.Obter();
         }
     }
 }

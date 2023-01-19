@@ -17,7 +17,7 @@ namespace SalesManagement.Report.Api.Configuration
         /// <param name="configuration"></param>
         public static void Register(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IRelatorio, Relatorio>();
+            services.AddTransient<IRelatorio, RelatorioApp>();
             services.AddTransient<IRelatorioRepository, RelatorioRepository>();
             services.AddTransient<ILancamentoBancarioRepository, LancamentoBancarioRepository>();
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));

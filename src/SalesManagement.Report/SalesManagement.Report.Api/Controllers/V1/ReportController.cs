@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalesManagement.Report.Application.Feature.Interfaces;
+using SalesManagement.Report.Domain.Entities;
 using Swashbuckle.AspNetCore.Annotations;
-using System.ComponentModel.DataAnnotations;
 using System.Net;
 
 namespace SalesManagement.Report.Api.Controllers.V1
@@ -12,7 +12,7 @@ namespace SalesManagement.Report.Api.Controllers.V1
     [Route("v{version:apiVersion}/[controller]")]
     [ApiVersion("1")]
     [ApiController]
-    public class ProcessReportController : ControllerBase
+    public class ReportController : ControllerBase
     {
         private readonly IRelatorio _processar;
 
@@ -20,7 +20,7 @@ namespace SalesManagement.Report.Api.Controllers.V1
         /// Construtor
         /// </summary>
         /// <param name="processar"></param>
-        public ProcessReportController(IRelatorio processar)
+        public ReportController(IRelatorio processar)
         {
             _processar = processar;
         }
@@ -55,6 +55,23 @@ namespace SalesManagement.Report.Api.Controllers.V1
             FileContentResult response = new FileContentResult(buffer, "text/csv");
 
             return response;
+        }
+
+        /// <summary>
+        /// Obtém os metadados dos relatórios
+        /// </summary>
+        /// <returns>IActionResult</returns>
+        [SwaggerResponse((int)HttpStatusCode.OK, "Obtém os metadados dos relatórios", typeof(List<Relatorio>))]
+        [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Erro interno no servidor")]
+        [HttpGet]
+        [Route("")]
+        public IActionResult ObterMetadados()
+        {
+            List<Relatorio> relatorios = _processar.Obter();
+
+            if (relatorios?.Count == 0) return NoContent();
+
+            return Ok(relatorios);
         }
     }
 }

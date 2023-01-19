@@ -26,13 +26,8 @@ services:
         - 5145:80
     networks:
       - network-desafio
-    # volumes:
-      # - ~/.aspnet/https:/https:ro
     environment: 
       ASPNETCORE_ENVIRONMENT: Development
-      # ASPNETCORE_URLS: https://localhost:7102;http://localhost:5145
-      # ASPNETCORE_Kestrel__Certificates__Default__Password: Mins@it
-      # ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
     depends_on:
       - sqlserver
   report:
