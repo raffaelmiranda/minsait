@@ -25,4 +25,4 @@ RUN dotnet publish "SalesManagement.CashFlow.Api.csproj" -c Release -o /app/publ
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SalesManagement.CashFlow.Api.dll"]
+ENTRYPOINT ["dotnet", "SalesManagement.CashFlow.Api.dll", "--host", "0.0.0.0"]
