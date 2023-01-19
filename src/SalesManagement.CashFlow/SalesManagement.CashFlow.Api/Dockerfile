@@ -2,8 +2,8 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 5145
-EXPOSE 7102
+EXPOSE 80
+#EXPOSE 7102
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /source
@@ -25,4 +25,4 @@ RUN dotnet publish "SalesManagement.CashFlow.Api.csproj" -c Release -o /app/publ
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SalesManagement.CashFlow.Api.dll", "--host", "0.0.0.0"]
+ENTRYPOINT ["dotnet", "SalesManagement.CashFlow.Api.dll"]

@@ -20,7 +20,7 @@ var app = builder.Build();
 app.UseRouting();
 app.UseEndpoints((endpoints) => endpoints.MapControllers());
 
-if (!app.Environment.IsProduction())
+if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
@@ -33,11 +33,6 @@ if (!app.Environment.IsProduction())
     //app.UseSwaggerAuthorized();
     app.UseSwaggerDocumentation();
 }
-//else
-//{
-//    app.UseHsts();
-//    app.UseHttpsRedirection();
-//}
 
 await app.Services.MigrateDatabaseAsync<CashFlowContext>();
 await app.RunAsync();

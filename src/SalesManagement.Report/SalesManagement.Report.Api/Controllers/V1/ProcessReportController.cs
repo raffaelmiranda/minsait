@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalesManagement.Report.Application.Feature.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 
 namespace SalesManagement.Report.Api.Controllers.V1
@@ -43,11 +44,11 @@ namespace SalesManagement.Report.Api.Controllers.V1
         /// Download relatório
         /// </summary>
         /// <returns>IActionResult</returns>
-        [SwaggerResponse((int)HttpStatusCode.OK, "Solicitar relatório", typeof(bool))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Solicitar relatório", typeof(FileContentResult))]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Erro interno no servidor")]
-        [HttpPost]
+        [HttpGet]
         [Route("download")]
-        public IActionResult Download(string nomeArquivo)
+        public IActionResult Download([FromQuery, SwaggerParameter("Qual é o nome do relatório?", Required = true)] string nomeArquivo)
         {
             byte[] buffer = _processar.Download(nomeArquivo);
 

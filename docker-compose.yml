@@ -23,33 +23,32 @@ services:
     container_name: backend-api-cashflow
     restart: always
     ports:
-        - 5145:5145
-        - 7102:7102
+        - 5145:80
     networks:
       - network-desafio
-    volumes:
-      - ~/.aspnet/https:/https:ro
+    # volumes:
+      # - ~/.aspnet/https:/https:ro
     environment: 
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: https://localhost:7102;http://localhost:5145
-      ASPNETCORE_Kestrel__Certificates__Default__Password: Mins@it
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
+      # ASPNETCORE_URLS: https://localhost:7102;http://localhost:5145
+      # ASPNETCORE_Kestrel__Certificates__Default__Password: Mins@it
+      # ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
     depends_on:
       - sqlserver
-  # report:
-    # build:
-        # context: .
-        # dockerfile: src/SalesManagement.Report/SalesManagement.Report.Api/Dockerfile
-    # container_name: backend-api-report
-    # restart: always
-    # # ports:
-        # # - 4003:7103
-    # networks:
-      # - network-desafio
-    # environment: 
-      # ASPNETCORE_ENVIRONMENT: Development
-    # depends_on:
-      # - sqlserver
+  report:
+    build:
+        context: .
+        dockerfile: src/SalesManagement.Report/SalesManagement.Report.Api/Dockerfile
+    container_name: backend-api-report
+    restart: always
+    ports:
+        - 5146:80
+    networks:
+      - network-desafio
+    environment: 
+      ASPNETCORE_ENVIRONMENT: Development
+    depends_on:
+      - sqlserver
 networks: 
   network-desafio:
     driver: bridge

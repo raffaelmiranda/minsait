@@ -19,7 +19,7 @@ var app = builder.Build();
 app.UseRouting();
 app.UseEndpoints((endpoints) => endpoints.MapControllers());
 
-if (!app.Environment.IsProduction())
+if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
