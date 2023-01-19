@@ -6,7 +6,7 @@
 
 
 ## Desenho da Arquitetura
-A arquitetura atual do solução consite em 2 serviços executando dentro de container docker em linux e 1 banco de dados SQL Server executando dentro de container docker em linux.
+A arquitetura atual do solução consiste em 2 serviços executando dentro de container docker em linux e 1 banco de dados SQL Server executando dentro de container docker em linux.
 ![Arquitetura Versão 1](/arch/arquitetura-v1.png)
 
 ## Preparando o ambiente
